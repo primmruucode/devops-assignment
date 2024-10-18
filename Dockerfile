@@ -1,20 +1,16 @@
-FROM golang:1.20-alpine AS builder
+FROM golang:1.20-buster AS build
 
 WORKDIR /app
 
-COPY go.mod ./
+COPY . ./
 RUN go mod download
 
-COPY main.go .
+RUN go build -o /bin/app
 
-RUN GOOS=linux GOARCH=amd64 go build -o hello-api
+FROM debian:buster-slim
 
-FROM alpine:latest
-
-WORKDIR /app
-
-COPY --from=builder /app/hello-api .
+COPY --from=build /bin/app /bin
 
 EXPOSE 8080
 
-CMD ["./hello-api"]
+CMD [ "/bin/app" ]
