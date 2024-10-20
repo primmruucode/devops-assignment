@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../_common
+- ./namespace.yaml
+
+namespace: go-app-dev-ns
+
+replicas:
+- count: 1
+  name: go-app-dev-dep
+
+patches:
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: go-app-dev-dep
+  target:
+    name: NAME_PLACEHOLDER
+- path: deployment-patch.yaml
+
+
+images:
+- name: primmruuhub/devops-assignment
+  newTag: 0.0.1
+labels:
+- includeSelectors: true
+  pairs:
+    app: go-app-dev-lab

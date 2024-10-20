@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: NAME_PLACEHOLDER
+spec:
+  template:
+    spec:
+      containers:
+      - name: go-app
+        image: primmruuhub/devops-assignment:IMG_TAG_PLACEHOLDER
