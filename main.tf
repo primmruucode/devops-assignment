@@ -76,3 +76,25 @@ resource "google_compute_firewall" "allow_out" {
   direction = "EGRESS"
 
 }
+
+resource "google_compute_router" "gke_router" {
+  name    = var.router_name
+  network = var.network_name
+  region  = var.region
+}
+
+resource "google_compute_router_nat" "gke_nat_gw" {
+  name   = var.nat_name
+  region = var.region
+  router = var.router_name
+
+  nat_ip_allocate_option = "AUTO_ONLY" 
+
+  log_config {
+    enable = true 
+  }
+
+  subnetworks {
+    name = var.subnet_name
+  }
+}

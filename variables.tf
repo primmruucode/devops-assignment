@@ -22,6 +22,18 @@ variable "cluster_name" {
   default     = "gke-cluster"
 }
 
+variable "router_name" {
+  description = "The name of the router."
+  type        = string
+  default     = "gke-rt"
+}
+
+variable "nat_name" {
+  description = "The name of the nat."
+  type        = string
+  default     = "nat-gw"
+}
+
 variable "network_name" {
   description = "The name of the VPC network."
   type        = string
