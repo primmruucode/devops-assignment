@@ -1,4 +1,5 @@
 provider "google" {
+  version = ">= 4.0.0"  # Ensure using the latest version of the provider
   project = var.project_id
   region  = var.region
 }
@@ -25,10 +26,6 @@ resource "google_container_cluster" "gke_cluster" {
     enable_private_nodes    = true
     enable_private_endpoint = false
     master_ipv4_cidr_block  = "172.16.0.0/28"
-  }
-
-  workload_identity_config {
-    identity_namespace = "${var.project_id}.svc.id.goog"
   }
 
   ip_allocation_policy {
