@@ -20,7 +20,8 @@ resource "google_container_cluster" "gke_cluster" {
   location           = var.region
   network            = google_compute_network.vpc_network.id
   subnetwork         = google_compute_subnetwork.gke_subnet.id
-  initial_node_count = 1 
+  intital_node_count = "1"
+  remove_default_node_pool = "true"
 
   private_cluster_config {
     enable_private_nodes    = true
@@ -38,17 +39,13 @@ resource "google_container_node_pool" "primary_nodes" {
   cluster    = google_container_cluster.gke_cluster.name
   location   = google_container_cluster.gke_cluster.location
   node_count = var.node_count
+  depends_on = ["google_container_cluster.gke_cluster"]
 
   node_config {
     machine_type = var.node_machine_type
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
     ]
-  }
-
-  management {
-    auto_upgrade = true
-    auto_repair  = true
   }
 }
 
