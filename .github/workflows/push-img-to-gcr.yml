@@ -83,6 +83,13 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_CREDS }}
 
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v1'
+
+    - name: 'Use gcloud CLI'
+      run: |-
+        gcloud auth configure-docker asia.gcr.io
+
     - name: pull
       run: |-
         docker pull ${{ inputs.image_name }}
