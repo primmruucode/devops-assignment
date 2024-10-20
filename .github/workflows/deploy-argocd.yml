@@ -1,0 +1,33 @@
+name: Deploy ArgoCD to GKE
+
+on:
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: devops-asm
+  GKE_CLUSTER: gke-cluster 
+  GKE_ZONE: asia-southeast1-b
+
+jobs:
+  deploy-argocd:
+    name: deploy-argocd
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+
+    # Get the GKE credentials so we can deploy to the cluster
+    - uses: google-github-actions/get-gke-credentials@db150f2cc60d1716e61922b832eae71d2a45938f
+      with:
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_ZONE }}
+        credentials: ${{ secrets.GCP_CREDS }}
+
+
+    # Deploy the Docker image to the GKE cluster
+    - name: Deploy
+      run: |-
+        kubectl get all -A
