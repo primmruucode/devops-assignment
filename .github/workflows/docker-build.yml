@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release:
-        description: 'New Tag?'
+        description: 'Make release?'
         required: true
         type: boolean
         default: false
