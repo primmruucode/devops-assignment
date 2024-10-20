@@ -67,7 +67,7 @@ resource "google_project_iam_member" "gke_sa_roles" {
 
 resource "google_compute_firewall" "allow_out" {
   name    = "allow-access"
-  network = "var.network_name"  
+  network = var.network_name
 
   allow {
     protocol = "tcp"
