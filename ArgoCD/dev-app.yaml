@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-app-argo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/primmruucode/devops-assignment.git'
+    targetRevision: 'main' 
+    path: Kustomize/overlays/dev  
+  destination:
+    server: 'https://kubernetes.default.svc' 
+  syncPolicy:
+    automated:  
+      prune: true
+      selfHeal: true
