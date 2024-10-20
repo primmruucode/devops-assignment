@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/primmruucode/devops-assignment.git'
+    repoURL: 'https://github.com/primmruucode/devops-assignment'
     targetRevision: 'main' 
     path: Kustomize/overlays/dev  
   destination:
