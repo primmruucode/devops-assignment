@@ -43,7 +43,7 @@ variable "subnet_ip_cidr" {
 variable "node_count" {
   description = "The number of nodes in the GKE cluster."
   type        = number
-  default     = 1
+  default     = 3
 }
 
 variable "node_machine_type" {
