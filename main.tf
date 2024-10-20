@@ -20,7 +20,7 @@ resource "google_container_cluster" "gke_cluster" {
   location           = var.zone
   network            = google_compute_network.vpc_network.id
   subnetwork         = google_compute_subnetwork.gke_subnet.id
-  initial_node_count = "2"
+  initial_node_count = "1"
   remove_default_node_pool = "true"
 
   private_cluster_config {
