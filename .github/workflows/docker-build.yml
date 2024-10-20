@@ -1,7 +1,17 @@
-name: docker-build
+name: docker-build-deploy
 
 on:
   workflow_dispatch:
+    inputs:
+      release:
+        description: 'New Tag?'
+        required: true
+        type: boolean
+        default: false
+      new_tag:
+        description: 'new tag release only'
+        required: false
+        type: string
 
 jobs:
   docker:
@@ -21,6 +31,29 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v6
+        if: ${{ inputs.release == false }}
         with:
           push: true
           tags: primmruuhub/devops-assignment:0.0.1
+
+      - name: Set sha
+        if: ${{ inputs.release == true }}
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Set new_tag
+        if: ${{ inputs.release == true }}
+        id: set_tag
+        run: |
+          if [ "${{ inputs.new_tag }}" == "" ]; then
+            echo "new_tag=${{ steps.vars.outputs.sha_short }}" >> $GITHUB_ENV
+          else
+            echo "new_tag=${{ inputs.new_tag }}" >> $GITHUB_ENV
+          fi
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        if: ${{ inputs.release == true }}
+        with:
+          push: true
+          tags: primmruuhub/devops-assignment:${{ env.new_tag }}
