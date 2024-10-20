@@ -79,17 +79,17 @@ jobs:
 
 
     - name: Authenticate to GCP
-      uses: google-github-actions/auth@v2
+      uses: google-github-actions/auth@v12
       with:
         credentials_json: ${{ secrets.GCP_CREDS }}
 
     - name: pull
       run: |-
         docker pull ${{ inputs.image_name }}
+        docker images
 
     - name: tag and push
       run: |-
-        docker tag ${{ inputs.private_tag }} gcr.io/${{ env.PROJECT_ID }}/${{ inputs.private_tag }}
-        docker images
-        docker push gcr.io/${{ env.PROJECT_ID }}/${{ inputs.private_tag }}
+        docker tag ${{ inputs.image_name }} asia.gcr.io/${{ env.PROJECT_ID }}/${{ inputs.private_tag }}      
+        docker push asia.gcr.io/${{ env.PROJECT_ID }}/${{ inputs.private_tag }}
 
