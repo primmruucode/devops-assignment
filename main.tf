@@ -64,3 +64,21 @@ resource "google_project_iam_member" "gke_sa_roles" {
   member  = "serviceAccount:${google_service_account.gke_sa.email}"
   role    = each.value
 }
+
+resource "google_compute_firewall" "allow_github" {
+  name    = "allow-github-access"
+  network = "var.network_name"  
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]  
+  }
+
+  source_ranges = [
+    "192.30.252.0/22",  # GitHub IP ranges
+    "185.199.108.0/22",  # GitHub IP ranges
+    "143.55.64.0/22",    # Additional GitHub IP ranges
+    "185.199.109.0/22"   # GitHub IP ranges
+  ]
+
+}
