@@ -1,4 +1,7 @@
-# This is an auto-generated file. DO NOT EDIT
+kind: Namespace
+metadata:
+  name: argocd
+---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
