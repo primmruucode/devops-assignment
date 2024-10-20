@@ -90,6 +90,7 @@ jobs:
 
     - name: tag and push
       run: |-
-        docker tag ${{ inputs.image_name }} asia.gcr.io/${{ env.PROJECT_ID }}/${{ inputs.private_tag }}      
+        docker tag ${{ inputs.image_name }} asia.gcr.io/${{ env.PROJECT_ID }}/${{ inputs.private_tag }}     
+        docker images 
         docker push asia.gcr.io/${{ env.PROJECT_ID }}/${{ inputs.private_tag }}
 
