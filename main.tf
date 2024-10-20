@@ -1,5 +1,4 @@
 provider "google" {
-  version = ">= 4.0.0"  # Ensure using the latest version of the provider
   project = var.project_id
   region  = var.region
 }
@@ -50,6 +49,11 @@ resource "google_container_node_pool" "primary_nodes" {
     auto_upgrade = true
     auto_repair  = true
   }
+}
+
+resource "google_service_account" "gke_sa" {
+  account_id   = "gke-sa"
+  display_name = "GKE Service Account"
 }
 
 resource "google_project_iam_member" "gke_sa_roles" {
