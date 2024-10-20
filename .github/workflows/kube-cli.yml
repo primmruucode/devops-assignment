@@ -1,4 +1,4 @@
-name: Deploy ArgoCD to GKE
+name: kubectl cli
 
 on:
   workflow_dispatch:
@@ -13,8 +13,8 @@ env:
   GKE_ZONE: asia-southeast1-b
 
 jobs:
-  deploy-argocd:
-    name: deploy-argocd
+  runcli:
+    name: runcli
     runs-on: ubuntu-latest
     environment: production
 
