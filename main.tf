@@ -39,7 +39,6 @@ resource "google_container_node_pool" "primary_nodes" {
   cluster    = google_container_cluster.gke_cluster.name
   location   = google_container_cluster.gke_cluster.location
   node_count = var.node_count
-  initial_node_count = 1
 
   node_config {
     machine_type = var.node_machine_type
