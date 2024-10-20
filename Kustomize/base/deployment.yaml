@@ -10,7 +10,7 @@ spec:
         app: go-app
     spec:
       containers:
-        - name: go-app
+        - name: app
           image: IMG_NAME:IMG_TAG_PLACEHOLDER
           imagePullPolicy: IfNotPresent
           ports:

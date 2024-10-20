@@ -6,5 +6,5 @@ spec:
   template:
     spec:
       containers:
-      - name: go-app
+      - name: app
         image: primmruuhub/devops-assignment:IMG_TAG_PLACEHOLDER
