@@ -17,7 +17,7 @@ resource "google_compute_subnetwork" "gke_subnet" {
 
 resource "google_container_cluster" "gke_cluster" {
   name               = var.cluster_name
-  location           = var.region
+  location           = var.zone
   network            = google_compute_network.vpc_network.id
   subnetwork         = google_compute_subnetwork.gke_subnet.id
   initial_node_count = "1"
