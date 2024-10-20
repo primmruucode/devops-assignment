@@ -20,6 +20,7 @@ resource "google_container_cluster" "gke_cluster" {
   location           = var.region
   network            = google_compute_network.vpc_network.id
   subnetwork         = google_compute_subnetwork.gke_subnet.id
+  initial_node_count = 1 
 
   private_cluster_config {
     enable_private_nodes    = true
