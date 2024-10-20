@@ -92,9 +92,6 @@ resource "google_compute_router_nat" "gke_nat_gw" {
 
   log_config {
     enable = true 
-  }
-
-  subnetworks {
-    name = var.subnet_name
+    filter = "ALL" 
   }
 }
