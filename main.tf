@@ -1,0 +1,67 @@
+provider "google" {
+  project = var.project_id
+  region  = var.region
+}
+
+resource "google_compute_network" "vpc_network" {
+  name                    = var.network_name
+  auto_create_subnetworks = false
+}
+
+resource "google_compute_subnetwork" "gke_subnet" {
+  name          = var.subnet_name
+  ip_cidr_range = var.subnet_ip_cidr
+  region        = var.region
+  network       = google_compute_network.vpc_network.id
+}
+
+resource "google_container_cluster" "gke_cluster" {
+  name               = var.cluster_name
+  location           = var.region
+  network            = google_compute_network.vpc_network.id
+  subnetwork         = google_compute_subnetwork.gke_subnet.id
+
+  private_cluster_config {
+    enable_private_nodes    = true
+    enable_private_endpoint = false
+    master_ipv4_cidr_block  = "172.16.0.0/28"
+  }
+
+  workload_identity_config {
+    identity_namespace = "${var.project_id}.svc.id.goog"
+  }
+
+  ip_allocation_policy {
+    cluster_ipv4_cidr_block  = "/14"
+    services_ipv4_cidr_block = "/20"
+  }
+}
+
+resource "google_container_node_pool" "primary_nodes" {
+  cluster    = google_container_cluster.gke_cluster.name
+  location   = google_container_cluster.gke_cluster.location
+  node_count = var.node_count
+
+  node_config {
+    machine_type = var.node_machine_type
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/cloud-platform",
+    ]
+  }
+
+  management {
+    auto_upgrade = true
+    auto_repair  = true
+  }
+}
+
+resource "google_project_iam_member" "gke_sa_roles" {
+  for_each = toset([
+    "roles/container.admin",
+    "roles/compute.networkAdmin",
+  ])
+
+  project = var.project_id
+  member  = "serviceAccount:${google_service_account.gke_sa.email}"
+  role    = each.value
+}
