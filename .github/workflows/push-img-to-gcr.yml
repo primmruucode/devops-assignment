@@ -87,7 +87,8 @@ jobs:
       run: |-
         docker pull ${{ inputs.image_name }}
 
-    - name: push
+    - name: tag and push
       run: |-
         docker tag ${{ inputs.image_name }} gcr.io/${{ env.PROJECT_ID }}/${{ inputs.private_tag }}
+        docker push gcr.io/${{ env.PROJECT_ID }}/${{ inputs.private_tag }}
 
