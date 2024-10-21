@@ -23,6 +23,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Fetch latest changes
+        run: git fetch origin main
+
+      - name: Rebase on top of latest changes
+        run: git rebase origin/main
+        
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
