@@ -1,0 +1,4 @@
+ArgoCD/
+Kustomize/
+*.tf
+*.md
