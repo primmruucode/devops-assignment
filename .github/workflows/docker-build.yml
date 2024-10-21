@@ -12,6 +12,10 @@ on:
         description: 'new tag release only'
         required: false
         type: string
+      ENV:
+        description: 'ENV'
+        required: true
+        type: string
 
 jobs:
   docker:
@@ -62,14 +66,14 @@ jobs:
 
       - name: Update Kustomization
         run: |
-          sed -i "s/newTag: .*/newTag: ${{ env.new_tag }}/" Kustomize/overlays/dev/kustomization.yaml
-          cat Kustomize/overlays/dev/kustomization.yaml
+          sed -i "s/newTag: .*/newTag: ${{ env.new_tag }}/" Kustomize/overlays/${{ inputs.ENV }}/kustomization.yaml
+          cat Kustomize/overlays/${{ inputs.ENV }}/kustomization.yaml
 
       - name: Commit files
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git commit -a -m "change Image version to ${{ env.new_tag }} "
+          git commit -a -m "change Image version to ${{ env.new_tag }} in ${{ inputs.ENV }}"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
