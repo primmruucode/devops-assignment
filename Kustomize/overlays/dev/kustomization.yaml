@@ -22,7 +22,7 @@ patches:
 
 images:
 - name: primmruuhub/devops-assignment
-  newTag: 0.0.1
+  newTag: 0.0.2
 labels:
 - includeSelectors: true
   pairs:
