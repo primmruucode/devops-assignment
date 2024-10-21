@@ -2,7 +2,7 @@
 
 **Expected output:** Yaml files and instruction how to deploy the application or command line
 
-**Explanation
+**Explanation**
 
 ArgoCD can be installed using either Helm or a pre-generated install.yaml file. For simplicity I use the install.yaml for this purpose
 
