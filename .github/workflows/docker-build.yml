@@ -60,15 +60,17 @@ jobs:
           push: true
           tags: primmruuhub/devops-assignment:${{ env.new_tag }}
 
-      - name: Update image
-        uses: fjogeleit/yaml-update-action@main
+      - name: Update Kustomization
+        run: |
+          sed -i "s/newTag: .*/newTag: ${{ env.new_tag }}/" Kustomize/overlays/dev/kustomization.yaml
+          cat Kustomize/overlays/dev/kustomization.yaml
+
+      - name: Commit files
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "change Image version to ${{ env.new_tag }} "
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
-          valueFile: 'Kustomize/overlays/dev/kustomization.yaml'
-          propertyPath: 'images.newTag'
-          value: ${{ env.new_tag }}
-          createPR: true
-          branch: main
-          message: 'Update Image Version to ${{ env.new_tag }}' 
-          targetBranch: main
-          masterBranchName: main
- 
+          force_with_lease: true
