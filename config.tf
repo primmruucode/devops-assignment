@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
     bucket = "tf-state-bucket-devops-asm" 
-    prefix = "terraform/state/gke.tfstate"  
+    prefix = "terraform/state/"  
   }
   required_providers {
     google = {
