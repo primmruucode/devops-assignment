@@ -69,3 +69,6 @@ jobs:
           createPR: true
           branch: main
           message: 'Update Image Version to ${{ env.new_tag }}' 
+          targetBranch: main
+          masterBranchName: main
+ 
