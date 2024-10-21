@@ -57,3 +57,12 @@ jobs:
         with:
           push: true
           tags: primmruuhub/devops-assignment:${{ env.new_tag }}
+
+      - name: Update image
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          valueFile: 'Kustomize/overlays/dev/kustomization.yaml'
+          propertyPath: 'images.newTag'
+          value: ${{ env.new_tag }}
+          createPR: true
+          message: 'Update Image Version to ${{ env.new_tag }}' 
