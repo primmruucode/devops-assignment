@@ -65,4 +65,5 @@ jobs:
           propertyPath: 'images.newTag'
           value: ${{ env.new_tag }}
           createPR: true
+          branch: main
           message: 'Update Image Version to ${{ env.new_tag }}' 
