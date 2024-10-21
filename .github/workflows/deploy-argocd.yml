@@ -2,6 +2,12 @@ name: Deploy ArgoCD to GKE
 
 on:
   workflow_dispatch:
+    inputs:
+      install:
+        description: 'Install new argocd?'
+        required: true
+        type: boolean
+        default: false
 
 env:
   PROJECT_ID: devops-asm
@@ -32,7 +38,11 @@ jobs:
 
 
     # Deploy the Docker image to the GKE cluster
-    - name: Deploy
+    - name: Install
+      if: ${{ inputs.install == true }}
       run: |-
         kubectl apply -f ./ArgoCD/installation/ -n argocd
+    
+    - name: Deploy app
+      run: |-
         kubectl apply -f ./ArgoCD/resource/ -n argocd
