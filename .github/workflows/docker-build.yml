@@ -60,7 +60,12 @@ jobs:
           push: true
           tags: primmruuhub/devops-assignment:${{ env.new_tag }}
 
-      - name: Update Kustomization
-        run: |
-          sed -i "s/newTag: .*/newTag: ${{ env.new_tag }}/" Kustomize/overlays/dev/kustomization.yaml
-          cat Kustomize/overlays/dev/kustomization.yaml
+      - name: Update image
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          valueFile: 'Kustomize/overlays/dev/kustomization.yaml'
+          propertyPath: 'images.newTag'
+          value: ${{ env.new_tag }}
+          createPR: true
+          branch: main
+          message: 'Update Image Version to ${{ env.new_tag }}' 
